@@ -115,23 +115,23 @@ private JPanel container = new JPanel();
     if(operateur.equals("+")){
       chiffre1 = chiffre1 + 
             Double.valueOf(ecran.getText()).doubleValue();
-      ecran.setText(String.valueOf(chiffre1));
+      
     }
     if(operateur.equals("-")){
       chiffre1 = chiffre1 - 
             Double.valueOf(ecran.getText()).doubleValue();
-      ecran.setText(String.valueOf(chiffre1));
+      
     }          
     if(operateur.equals("*")){
       chiffre1 = chiffre1 * 
             Double.valueOf(ecran.getText()).doubleValue();
-      ecran.setText(String.valueOf(chiffre1));
+      
     }     
     if(operateur.equals("/")){
       try{
         chiffre1 = chiffre1 / 
               Double.valueOf(ecran.getText()).doubleValue();
-        ecran.setText(String.valueOf(chiffre1));
+        
       } catch(ArithmeticException e) {
         ecran.setText("0");
       }
@@ -159,6 +159,7 @@ private JPanel container = new JPanel();
   class EgalListener implements ActionListener {
     public void actionPerformed(ActionEvent arg0){
       calcul();
+      ecran.setText(String.valueOf(chiffre1));
       update = true;
       clicOperateur = false;
     }

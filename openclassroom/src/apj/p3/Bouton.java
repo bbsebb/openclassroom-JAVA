@@ -13,7 +13,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
   
 public class Bouton extends JButton implements MouseListener{
-  private String name;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private String name;
   private Image img;
 
   public Bouton(String str){

@@ -2,10 +2,13 @@ package apj.p3;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener; 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,7 +19,10 @@ public class Fenetre extends JFrame{
   private JButton bouton = new JButton("Go");
   private JButton bouton2 = new JButton("Stop");
   private JPanel container = new JPanel();
-  private JLabel label = new JLabel("Le JLabel");
+  private JLabel label = new JLabel("Choix de la forme");
+  private String[] choixListe = {"ROND","CARRE","TRIANGLE","ETOILE"};
+  private JComboBox<String> liste = new JComboBox<String>(choixListe);
+  private JCheckBox check = new JCheckBox("Min");
   private int compteur = 0;
   private boolean animated = true;
   private boolean backX, backY;
@@ -35,16 +41,21 @@ public class Fenetre extends JFrame{
     bouton.addActionListener(new BoutonListener()); 
     bouton.setEnabled(false);
     bouton2.addActionListener(new Bouton2Listener());
-
+    liste.addActionListener(new FormeListener());
+    check.addActionListener(new CheckListener());
     JPanel south = new JPanel();
     south.add(bouton);
     south.add(bouton2);
     container.add(south, BorderLayout.SOUTH);
-    Font police = new Font("Tahoma", Font.BOLD, 16);
+    Font police = new Font("Tahoma", Font.BOLD, 11);
     label.setFont(police);
     label.setForeground(Color.blue);
     label.setHorizontalAlignment(JLabel.CENTER);
-    container.add(label, BorderLayout.NORTH);
+    JPanel north = new JPanel(new FlowLayout());
+    north.add(label);
+    north.add(liste);
+    north.add(check);
+    container.add(north, BorderLayout.NORTH);
     this.setContentPane(container);
     this.setVisible(true);
     go();
@@ -65,6 +76,7 @@ public class Fenetre extends JFrame{
       else pan.setPosX(--x);
       if(!backY) pan.setPosY(++y);
       else pan.setPosY(--y);
+      
       pan.repaint();
 
       try {
@@ -75,6 +87,29 @@ public class Fenetre extends JFrame{
     }     
   }
 
+  public class CheckListener implements ActionListener {
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(check.isSelected())
+			pan.setDrawSize(10);
+		else
+			pan.setDrawSize(50);
+	}
+	  
+  }
+  
+  public class FormeListener implements ActionListener {
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		pan.setForme((String)liste.getSelectedItem());
+		
+	}
+	  
+  }
+  
   public class BoutonListener implements ActionListener{
 	    public void actionPerformed(ActionEvent arg0) {
 	      animated = true;

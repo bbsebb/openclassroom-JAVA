@@ -10,7 +10,7 @@ public static void main(String[] args) {
     Class.forName("org.postgresql.Driver");
     System.out.println("Driver O.K.");
 
-    String url = "jdbc:postgresql://localhost:5432/Ecole";
+    String url = "jdbc:postgresql://192.168.1.41:5432/Ecole";
     String user = "postgres";
     String passwd = "ga9399ghr";
 

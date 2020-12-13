@@ -1,7 +1,5 @@
 package apj.p3;
 
-import java.lang.reflect.InvocationTargetException;
-
 import javax.swing.SwingUtilities;
 
 public class Test {
@@ -12,7 +10,7 @@ public class Test {
 			@Override
 			public void run() {
 				// Fenetre f = new Fenetre();
-				FenetreJText f2 = new FenetreJText();
+				 new FenetreJText();
 
 			}
 		});
@@ -22,7 +20,7 @@ public class Test {
 			@Override
 			public void run() {
 				// Fenetre f = new Fenetre();
-				FenetreKeyListener f3 = new FenetreKeyListener();
+				 new FenetreKeyListener();
 
 			}
 		});

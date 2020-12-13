@@ -15,7 +15,11 @@ import javax.swing.JPanel;
 
 public class Fenetre extends JFrame{
 
-  private Panneau pan = new Panneau();
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private Panneau pan = new Panneau();
   private JButton bouton = new JButton("Go");
   private JButton bouton2 = new JButton("Stop");
   private JPanel container = new JPanel();
@@ -23,7 +27,7 @@ public class Fenetre extends JFrame{
   private String[] choixListe = {"ROND","CARRE","TRIANGLE","ETOILE"};
   private JComboBox<String> liste = new JComboBox<String>(choixListe);
   private JCheckBox check = new JCheckBox("Min");
-  private int compteur = 0;
+
   private boolean animated = true;
   private boolean backX, backY;
   private int x, y;

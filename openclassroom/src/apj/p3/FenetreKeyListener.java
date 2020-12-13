@@ -15,7 +15,11 @@ import javax.swing.JTextField;
 
 public class FenetreKeyListener extends JFrame {
 
-	  private JPanel container = new JPanel();
+	  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel container = new JPanel();
 	  private JTextField jtf;   
 	  private JLabel label = new JLabel("Téléphone FR");
 	  private JButton b = new JButton ("OK");

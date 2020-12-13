@@ -15,7 +15,7 @@ public static void main(String[] args) {
     String passwd = "ga9399ghr";
 
     Connection conn = DriverManager.getConnection(url, user, passwd);
-    System.out.println("Connexion effective !");         
+    System.out.println("Connexion effective !" + conn.getCatalog());         
        
   } catch (Exception e) {
     e.printStackTrace();

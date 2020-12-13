@@ -10,7 +10,11 @@ import java.util.concurrent.RecursiveTask;
 
 public class FolderScanner  extends RecursiveTask<Long>{
 
-  private Path path = null;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private Path path = null;
   private String filter = "*";
   private long result = 0;
 	
@@ -26,7 +30,7 @@ public class FolderScanner  extends RecursiveTask<Long>{
   */
   public long sequentialScan() throws ScanException{
     //Si le chemin n'est pas valide, on lève une exception
-    if(path == null || path.equals(""))
+    if(path == null || path.toString().equals(""))
       throw new ScanException("Chemin à scanner non valide (vide ou null) !");
 		
       System.out.println("Scan du dossier : " + path + " à la recherche des fichiers portant l'extension " + this.filter);
@@ -44,7 +48,7 @@ public class FolderScanner  extends RecursiveTask<Long>{
 		
       //Maintenant, on filtre le contenu de ce même dossier sur le filtre défini
       try(DirectoryStream<Path> listing = Files.newDirectoryStream(path, this.filter)){
-        for(Path nom : listing){
+        for(@SuppressWarnings("unused") Path nom : listing){
           //Pour chaque fichier correspondant, on incrémente notre compteur
           result++;
         }
@@ -62,7 +66,7 @@ public class FolderScanner  extends RecursiveTask<Long>{
     List<FolderScanner> list = new ArrayList<>();
     
     //Si le chemin n'est pas valide
-    if(path == null || path.equals(""))
+    if(path == null || path.toString().equals(""))
       throw new ScanException("Chemin à scanner non valide (vide ou null) !");
     
     System.out.println("Scan du dossier : " + path + " a la recherche des fichiers portant l'extension " + this.filter);
@@ -88,7 +92,7 @@ public class FolderScanner  extends RecursiveTask<Long>{
     
     //On compte maintenant les fichiers, correspondant au filtre, présents dans ce dossier
     try(DirectoryStream<Path> listing = Files.newDirectoryStream(path, this.filter)){
-      for(Path nom : listing){
+      for(@SuppressWarnings("unused") Path nom : listing){
         result++;
       }
     } catch (IOException e) {

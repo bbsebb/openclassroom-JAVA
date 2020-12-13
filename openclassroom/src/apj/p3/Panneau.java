@@ -7,7 +7,11 @@ import javax.swing.JPanel;
 
 public class Panneau extends JPanel {
 
-  private int posX = -50;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private int posX = -50;
   private int posY = -50;
   private String forme = "ROND";
   private int drawSize = 50;

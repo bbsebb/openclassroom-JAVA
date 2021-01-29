@@ -2,6 +2,7 @@ package apj.p2;
 
 public class Capital extends Ville{
 	
+	
 	private String monument;
 	public Capital() {
 		super();

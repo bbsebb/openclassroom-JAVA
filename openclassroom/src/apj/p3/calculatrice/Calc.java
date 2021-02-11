@@ -77,12 +77,23 @@ public class Calc extends JFrame{
 		this.setVisible(true);
 	}
 	
-	private JButton createJbutton(String titre) {
+	
+	
+	private JButton createBtn(String titre) {
 		JButton btn = new JButton(titre);
 		btn.setPreferredSize(new Dimension(20,20));
 		return btn;
 	}
 	
+	private JButton createBtnChiffre(String titre) {
+		JButton btn = createBtn(titre);
+		return btn;
+	}
+	
+	private JButton createBtnOp(String titre) {
+		JButton btn = createBtn(titre);
+		return btn;
+	}
 	
 
 }

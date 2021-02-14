@@ -23,11 +23,11 @@ public class Ardoise extends JFrame{
 		this.setSize(600,400);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setVisible(true);
 		JPanel pan = (JPanel) this.getContentPane();
 		this.setJMenuBar(createMenuBar());
 		pan.add(createToolBar(), BorderLayout.NORTH);
-		pan.add(new dessinPan(), BorderLayout.CENTER);
+		pan.add(new DessinPan(), BorderLayout.CENTER);
+		this.setVisible(true);
 	}
 
 	private JMenuBar createMenuBar() {

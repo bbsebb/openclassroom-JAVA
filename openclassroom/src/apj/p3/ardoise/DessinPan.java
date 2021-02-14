@@ -5,9 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class DessinPan extends JPanel{
@@ -18,6 +18,7 @@ public class DessinPan extends JPanel{
 	int y = -15;
 	
 	DessinPan () {
+
 		this.addMouseMotionListener(new MouseMotionListener() {
 			
 
@@ -30,18 +31,21 @@ public class DessinPan extends JPanel{
 			public void mouseDragged(MouseEvent e) {
 				x = e.getX();
 				y = e.getY();
-				DessinPan.this.repaint();
+				
 				
 			}
 		}); 
-		this.setBackground(Color.blue);
+		
 	}
 	
 	public void paintComponent(Graphics gOld) {
+		
 		Graphics2D g = (Graphics2D) gOld;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setColor(Color.black);
 		g.fillOval(x, y, 12, 12);
+		repaint();
+		
 	}
 	
 

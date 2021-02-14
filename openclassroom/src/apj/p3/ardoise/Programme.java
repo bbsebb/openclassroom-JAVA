@@ -19,7 +19,7 @@ public class Programme {
 			
 		}
 		Ardoise ardoise = new Ardoise();
-		ardoise.setVisible(true);
+
 
 	}
 

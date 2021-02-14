@@ -1,15 +1,18 @@
 package apj.p3.ardoise;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
@@ -18,15 +21,38 @@ public class Ardoise extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 
+	private DessinPan dessinPan;
+	
 	Ardoise() {
 		super("Mon ardoise");
 		this.setSize(600,400);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		JPanel pan = (JPanel) this.getContentPane();
 		this.setJMenuBar(createMenuBar());
 		pan.add(createToolBar(), BorderLayout.NORTH);
-		pan.add(new DessinPan(), BorderLayout.CENTER);
+		dessinPan = new DessinPan();
+		dessinPan.addMouseListener(new MouseAdapter() {
+		 
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(e.isPopupTrigger()) {
+					createPopMenu().show(e.getComponent(), e.getX() , e.getY());
+					System.out.println("popu");
+				}			
+			}
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(e.isPopupTrigger()) {
+					createPopMenu().show(e.getComponent(), e.getX() , e.getY());
+					System.out.println("popu");
+				}			
+			}
+
+		});
+		pan.add(dessinPan, BorderLayout.CENTER);
 		this.setVisible(true);
 	}
 
@@ -37,17 +63,12 @@ public class Ardoise extends JFrame{
 		menuFichier.setMnemonic('F');
 		menuBar.add(menuFichier);
 		
-		JMenuItem mnFEffacer = new JMenuItem("Effacer");
-		mnFEffacer.setMnemonic('E');
-		mnFEffacer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_DOWN_MASK));
-		menuFichier.add(mnFEffacer);
-		
+		menuFichier.add(actEffacer());
+
 		menuFichier.addSeparator();
 		
-		JMenuItem mnFQuitter = new JMenuItem("Quitter");
-		mnFQuitter.setMnemonic('Q');
-		mnFQuitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK));
-		menuFichier.add(mnFQuitter);
+
+		menuFichier.add(actQuitter());
 		
 		
 		JMenu menuEdition= new JMenu("Edition");
@@ -58,14 +79,10 @@ public class Ardoise extends JFrame{
 		mnEForme.setMnemonic('F');
 		menuEdition.add(mnEForme);
 		
-		JMenuItem mnEFRond = new JMenuItem("Rond");
-		mnEFRond.setMnemonic('R');
-		mnEFRond.setIcon(new ImageIcon("icons/rond_noir.png"));
-		mnEForme.add(mnEFRond);
-		JMenuItem mnEFCarre = new JMenuItem("Carre");
-		mnEFCarre.setIcon(new ImageIcon("icons/carre_noir.png"));
-		mnEFCarre.setMnemonic('C');
-		mnEForme.add(mnEFCarre);
+
+		mnEForme.add(actRond());
+
+		mnEForme.add(actCarre());
 		
 		
 		menuEdition.addSeparator();
@@ -74,18 +91,12 @@ public class Ardoise extends JFrame{
 		mnECouleur.setMnemonic('C');
 		menuEdition.add(mnECouleur);
 		
-		JMenuItem mnECRouge = new JMenuItem("Rouge");
-		mnECRouge.setIcon(new ImageIcon("icons/rouge.png"));
-		mnECRouge.setMnemonic('R');
-		mnECouleur.add(mnECRouge);
-		JMenuItem mnECBleu = new JMenuItem("Bleu");
-		mnECBleu.setIcon(new ImageIcon("icons/bleu.png"));
-		mnECBleu.setMnemonic('B');
-		mnECouleur.add(mnECBleu);
-		JMenuItem mnECJaune = new JMenuItem("Jaune");
-		mnECJaune.setIcon(new ImageIcon("icons/jaune.png"));
-		mnECJaune.setMnemonic('J');
-		mnECouleur.add(mnECJaune);
+
+		mnECouleur.add(actRouge());
+
+		mnECouleur.add(actBleu());
+
+		mnECouleur.add(actJaune());
 		
 		
 		
@@ -95,29 +106,174 @@ public class Ardoise extends JFrame{
 
 	private JToolBar createToolBar() {
 		JToolBar toolBar = new JToolBar();
+
+		toolBar.add(actCarre());
 		
-		JButton toolCarre = new JButton(new ImageIcon("icons/carre_noir.png"));
-		toolCarre.setToolTipText("Mettre le pinceau en forme carré");
-		toolBar.add(toolCarre);
-		
-		JButton toolRond = new JButton(new ImageIcon("icons/rond_noir.png"));
-		toolRond.setToolTipText("Mettre le pinceau en forme rond");
-		toolBar.add(toolRond);
+		toolBar.add(actRond());
 		
 		toolBar.addSeparator();
 		
-		JButton toolRouge = new JButton(new ImageIcon("icons/rouge.png"));
-		toolRouge.setToolTipText("Mettre le pinceau en rouge");
-		toolBar.add(toolRouge);
+		toolBar.add(actRouge());
 		
-		JButton toolJaune = new JButton(new ImageIcon("icons/jaune.png"));
-		toolJaune.setToolTipText("Mettre le pinceau en jaune");
-		toolBar.add(toolJaune);
+		toolBar.add(actJaune());
 		
-		JButton toolBleu = new JButton(new ImageIcon("icons/bleu.png"));
-		toolBleu.setToolTipText("Mettre le pinceau en bleu");
-		toolBar.add(toolBleu);
+		toolBar.add(actBleu());
+		
 		return toolBar;
+	}
+	
+	private JPopupMenu createPopMenu() {
+		JPopupMenu popupMenu = new JPopupMenu();
+		popupMenu.add(actEffacer());
+		popupMenu.addSeparator();
+		popupMenu.add(actRond());
+		popupMenu.add(actCarre());
+		popupMenu.add(actRouge());
+		popupMenu.add(actBleu());
+		popupMenu.add(actJaune());
+		return popupMenu;
+		
+	}
+	
+	 private AbstractAction actEffacer() {
+		return new AbstractAction("Effacer") {
+
+			private static final long serialVersionUID = 1L;
+
+			{
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_DOWN_MASK));
+				putValue(MNEMONIC_KEY, KeyEvent.VK_E);
+				putValue(SHORT_DESCRIPTION, "Effacer CTRL + E");
+			}
+			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		};
+		
+	}
+	
+	private AbstractAction actQuitter() {
+		return new AbstractAction("Quitter") {
+
+			private static final long serialVersionUID = 1L;
+
+			{
+				
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK));
+				putValue(MNEMONIC_KEY, KeyEvent.VK_K);
+				putValue(SHORT_DESCRIPTION, "Quitter CTRL + Q");
+			}
+			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		};
+		
+	}
+	
+	private AbstractAction actCarre() {
+		return new AbstractAction("Carre", new ImageIcon("icons/carre_noir.png")) {
+
+			private static final long serialVersionUID = 1L;
+
+			{
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK));
+				putValue(MNEMONIC_KEY, KeyEvent.VK_C);
+				putValue(SHORT_DESCRIPTION, "Forme carré CTRL + C");
+			}
+			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		};
+		
+	}
+	
+	private AbstractAction actRond() {
+		return new AbstractAction("Rond", new ImageIcon("icons/rond_noir.png")) {
+
+			private static final long serialVersionUID = 1L;
+
+			{
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_DOWN_MASK));
+				putValue(MNEMONIC_KEY, KeyEvent.VK_R);
+				putValue(SHORT_DESCRIPTION, "Forme rond CTRL + R");
+			}
+			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		};
+		
+	}
+	
+	private AbstractAction actRouge() {
+		return new AbstractAction("Rouge", new ImageIcon("icons/rouge.png")) {
+
+			private static final long serialVersionUID = 1L;
+
+			{
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
+				putValue(MNEMONIC_KEY, KeyEvent.VK_R);
+				putValue(SHORT_DESCRIPTION, "Couleur rouge CTRL + O");
+			}
+			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		};
+		
+	}
+	
+	private AbstractAction actBleu() {
+		return new AbstractAction("Bleu", new ImageIcon("icons/bleu.png")) {
+
+			private static final long serialVersionUID = 1L;
+
+			{
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_B, KeyEvent.CTRL_DOWN_MASK));
+				putValue(MNEMONIC_KEY, KeyEvent.VK_B);
+				putValue(SHORT_DESCRIPTION, "Couleur bleu CTRL + B");
+			}
+			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		};
+		
+	}
+	
+	private AbstractAction actJaune() {
+		return new AbstractAction("Bleu", new ImageIcon("icons/jaune.png")) {
+
+			private static final long serialVersionUID = 1L;
+
+			{
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_J, KeyEvent.CTRL_DOWN_MASK));
+				putValue(MNEMONIC_KEY, KeyEvent.VK_J);
+				putValue(SHORT_DESCRIPTION, "Couleur jaune CTRL + J");
+			}
+			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		};
+		
 	}
 
 

@@ -2,11 +2,10 @@ package apj.p3.ardoise;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 
@@ -16,33 +15,67 @@ public class DessinPan extends JPanel{
 	
 	int x = -15;
 	int y = -15;
+	Color couleur = Color.black;
+	String forme = "rond";
+	ArrayList<Point> points = new ArrayList<Point>();
 	
 	DessinPan () {
-		this.addMouseMotionListener(new MouseMotionListener() {
-			
 
-			public void mouseMoved(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
+		
+		this.addMouseMotionListener(new MouseMotionAdapter() {
+
 
 			public void mouseDragged(MouseEvent e) {
 				x = e.getX();
 				y = e.getY();
+
 				DessinPan.this.repaint();
 				
+				points.add(new Point(x,y,couleur,forme));
+				repaint();
 			}
 		}); 
 		this.setBackground(Color.blue);
 	}
 	
-	public void paintComponent(Graphics gOld) {
-		Graphics2D g = (Graphics2D) gOld;
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setColor(Color.black);
-		g.fillOval(x, y, 12, 12);
+
+	public void paintComponent(Graphics g) {		
+		super.paintComponent(g);
+		Iterator<Point> pts = points.iterator();
+		while(pts.hasNext()) {
+			Point pt = pts.next();
+			g.setColor(pt.getCouleur());
+			if(pt.getForme() == "rond")
+				g.fillOval(pt.getX(), pt.getY(), 12, 12);	
+			else
+				g.fillRect(pt.getX(), pt.getY(), 12, 12);
+		}
+		
 	}
+
+	public Color getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(Color couleur) {
+		this.couleur = couleur;
+	}
+
+	public String getForme() {
+		return forme;
+	}
+
+	public void setForme(String forme) {
+		this.forme = forme;
+	}
+	
+	public void clear() {
+		this.x=-12;
+		this.y=-12;
+		points.clear();
+		repaint();
+	}
+	
 	
 
 }

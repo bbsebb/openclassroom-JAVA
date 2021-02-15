@@ -1,6 +1,7 @@
 package apj.p3.ardoise;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -149,7 +150,7 @@ public class Ardoise extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				dessinPan.clear();
 			}
 		};
 		
@@ -170,7 +171,7 @@ public class Ardoise extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				Ardoise.this.dispose();
 			}
 		};
 		
@@ -190,7 +191,7 @@ public class Ardoise extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				dessinPan.setForme("carre");
 			}
 		};
 		
@@ -210,7 +211,7 @@ public class Ardoise extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				dessinPan.setForme("rond");
 			}
 		};
 		
@@ -230,7 +231,7 @@ public class Ardoise extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				dessinPan.setCouleur(Color.red);
 			}
 		};
 		
@@ -250,14 +251,14 @@ public class Ardoise extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				dessinPan.setCouleur(Color.blue);
 			}
 		};
 		
 	}
 	
 	private AbstractAction actJaune() {
-		return new AbstractAction("Bleu", new ImageIcon("icons/jaune.png")) {
+		return new AbstractAction("Jaune", new ImageIcon("icons/jaune.png")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -270,7 +271,7 @@ public class Ardoise extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				dessinPan.setCouleur(Color.yellow);
 			}
 		};
 		

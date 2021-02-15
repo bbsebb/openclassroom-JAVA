@@ -20,7 +20,6 @@ public class MaFenetre extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(300, 400);
-		this.setContentPane(new Panneau());
 		this.setVisible(true);
 		
 	}
@@ -32,17 +31,6 @@ public class MaFenetre extends JFrame {
 	}
 	
 	
-	public class Panneau extends JPanel {
 
-		private static final long serialVersionUID = 1L;
-
-		public void paintComponent(Graphics g) {
-			g.fillOval(20, 20, 75, 75);
-			g.fillOval(80, 80, 75, 75);
-			System.out.println("paint");
-			
-		}
-		
-	}
 
 }

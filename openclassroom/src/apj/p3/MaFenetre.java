@@ -38,6 +38,9 @@ public class MaFenetre extends JFrame {
 
 		public void paintComponent(Graphics g) {
 			g.fillOval(20, 20, 75, 75);
+			g.fillOval(80, 80, 75, 75);
+			System.out.println("paint");
+			
 		}
 		
 	}

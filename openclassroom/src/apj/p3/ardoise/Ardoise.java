@@ -142,7 +142,7 @@ public class Ardoise extends JFrame{
 			private static final long serialVersionUID = 1L;
 
 			{
-				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_DOWN_MASK));
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('1'));
 				putValue(MNEMONIC_KEY, KeyEvent.VK_E);
 				putValue(SHORT_DESCRIPTION, "Effacer CTRL + E");
 			}

@@ -15,6 +15,7 @@ public abstract class AbstractModel implements Serializable {
 	
 	AbstractModel() {
 		support = new PropertyChangeSupport(this);
+		this.setRslt(0);
 	}
 	
 	public abstract boolean operationAdditionner ();

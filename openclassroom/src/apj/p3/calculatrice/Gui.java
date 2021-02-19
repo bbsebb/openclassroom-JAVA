@@ -21,12 +21,13 @@ public class Gui extends JFrame {
 	
 	String[] operateur = {"+","-","/","*"};
 	AbstractModel calcModel;
+	AbstractController controller = new calcController();
 	
 	public Gui(AbstractModel caclModel) {
 		
 		super("Calculatrice v2");
 		
-		this.calcModel = calcModel;
+		this.calcModel = new CalcModel();
 		
 		this.setSize(270, 270);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -73,6 +74,7 @@ public class Gui extends JFrame {
 
 		JLabel label = new JLabel();
 		label.setBorder(BorderFactory.createLineBorder(Color.black));
+		label.setText("0");
 		calcModel.addPropertyChangeListener( (e) -> label.setText((String) e.getNewValue()));
 		return label;
 	}

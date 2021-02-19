@@ -1,8 +1,15 @@
 package apj.p3.calculatrice;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
-public abstract class AbstractModel {
+
+
+public abstract class AbstractModel implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	int rslt;
 	PropertyChangeSupport support;
 	
@@ -20,6 +27,7 @@ public abstract class AbstractModel {
 		return rslt;
 	}
 	protected void setRslt(int rslt) {
+		support.firePropertyChange("resultat", this.rslt, rslt);
 		this.rslt = rslt;
 	}
 
@@ -31,6 +39,16 @@ public abstract class AbstractModel {
 		this.support = support;
 	}
 	
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        this.support.removePropertyChangeListener(listener);
+    }
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		
+		this.support.addPropertyChangeListener(listener);
+    }
+	}
 	
 	
-}
+

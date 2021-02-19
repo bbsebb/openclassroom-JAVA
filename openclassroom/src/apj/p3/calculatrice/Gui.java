@@ -18,9 +18,16 @@ import javax.swing.KeyStroke;
 
 public class Gui extends JFrame {
 
+	
 	String[] operateur = {"+","-","/","*"};
-	public Gui() {
+	AbstractModel calcModel;
+	
+	public Gui(AbstractModel caclModel) {
+		
 		super("Calculatrice v2");
+		
+		this.calcModel = calcModel;
+		
 		this.setSize(270, 270);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -28,10 +35,12 @@ public class Gui extends JFrame {
 		JPanel pan = (JPanel) this.getContentPane();
 		pan.setLayout(new BorderLayout());
 		pan.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
+		
 		pan.add(createLabel(), BorderLayout.NORTH);
 		pan.add(createPanChiffre(), BorderLayout.CENTER);
 		pan.add(createPanOp(), BorderLayout.EAST);
+		
+		
 
 	}
 
@@ -64,6 +73,7 @@ public class Gui extends JFrame {
 
 		JLabel label = new JLabel();
 		label.setBorder(BorderFactory.createLineBorder(Color.black));
+		calcModel.addPropertyChangeListener( (e) -> label.setText((String) e.getNewValue()));
 		return label;
 	}
 

@@ -26,8 +26,7 @@ public class MaFenetre extends JFrame   {
 		this.getContentPane().add(label);
 	
 		this.setVisible(true);
-		h.run();
-		
+		h.run();	
 	}
 
 	public static void main(String[] args) throws UnsupportedLookAndFeelException {

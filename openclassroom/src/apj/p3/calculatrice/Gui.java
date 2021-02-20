@@ -2,33 +2,29 @@ package apj.p3.calculatrice;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
-import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 
 public class Gui extends JFrame {
 
-	
-	String[] operateur = {"+","-","/","*"};
+	private static final long serialVersionUID = 1L;
+	String[] operateur = { "+", "-", "/", "*" };
 	AbstractModel calcModel;
-	AbstractController controller = new calcController();
-	
+	AbstractController controller ;
+	JLabel label;
+
 	public Gui(AbstractModel caclModel) {
-		
+
 		super("Calculatrice v2");
-		
+
 		this.calcModel = new CalcModel();
-		
+		this.controller = new CalcController(this.calcModel);
 		this.setSize(270, 270);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -36,12 +32,10 @@ public class Gui extends JFrame {
 		JPanel pan = (JPanel) this.getContentPane();
 		pan.setLayout(new BorderLayout());
 		pan.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		
-		pan.add(createLabel(), BorderLayout.NORTH);
+		this.label = createLabel();
+		pan.add(this.label, BorderLayout.NORTH);
 		pan.add(createPanChiffre(), BorderLayout.CENTER);
 		pan.add(createPanOp(), BorderLayout.EAST);
-		
-		
 
 	}
 
@@ -49,7 +43,7 @@ public class Gui extends JFrame {
 
 		JPanel panOp = new JPanel();
 		panOp.setLayout(new GridLayout(5, 1, 5, 5));
-		panOp.add(createBtnCan());
+		panOp.add(createBtnClear());
 		for (String string : operateur) {
 			panOp.add(createBtnOp(string));
 		}
@@ -61,12 +55,12 @@ public class Gui extends JFrame {
 		JPanel panChiffre = new JPanel();
 		panChiffre.setLayout(new GridLayout(4, 3, 5, 5));
 		for (int i = 1; i < 10; i++) {
-			
+
 			panChiffre.add(this.createBtnChiffre(i));
 		}
 		panChiffre.add(this.createBtnChiffre("0"));
 		panChiffre.add(this.createBtnChiffre("."));
-		panChiffre.add(this.createBtnChiffre("="));
+		panChiffre.add(this.createBtnEgal());
 		return panChiffre;
 	}
 
@@ -75,49 +69,51 @@ public class Gui extends JFrame {
 		JLabel label = new JLabel();
 		label.setBorder(BorderFactory.createLineBorder(Color.black));
 		label.setText("0");
-		calcModel.addPropertyChangeListener( (e) -> label.setText((String) e.getNewValue()));
+		calcModel.addPropertyChangeListener((e) -> label.setText( e.getNewValue().toString()));
 		return label;
 	}
 
-	
 	private JButton createBtnChiffre(String chiffre) {
 		JButton btn = new JButton(chiffre);
+		btn.addActionListener(this::actionChiffre);
 		return btn;
 	}
-	
-	private JButton createBtnChiffre(int chiffre) {	
+
+	private JButton createBtnChiffre(int chiffre) {
 		return createBtnChiffre(Integer.toString(chiffre));
 	}
-	
+
 	private JButton createBtnEgal() {
 		JButton btn = new JButton("=");
+		btn.addActionListener(this::actionEgal);
 		return btn;
 	}
-	
+
 	private JButton createBtnOp(String op) {
 		JButton btn = new JButton(op);
+		btn.addActionListener(this::actionOperateur);
 		return btn;
 	}
-	
-	private JButton createBtnCan() {
-		JButton btn = new JButton("C");
-		return btn;
-	}
-	
-	
-	private void actionChiffre(ActionEvent e) {
 
+	private JButton createBtnClear() {
+		JButton btn = new JButton("C");
+		btn.addActionListener(this::actionClear);
+		return btn;
+	}
+
+	private void actionChiffre(ActionEvent e) {
+		this.label.setText(controller.controleChiffre(((JButton) e.getSource()).getText()));
 	}
 
 	private void actionEgal(ActionEvent e) {
-
+		controller.controleEgal();
 	}
 
 	private void actionOperateur(ActionEvent e) {
-
+		controller.controleOp(((JButton) e.getSource()).getText());
 	}
 
 	private void actionClear(ActionEvent e) {
-
+		controller.controleCancel();
 	}
 }

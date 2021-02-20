@@ -1,38 +1,62 @@
 package apj.p3.calculatrice;
 
+import java.beans.PropertyChangeListener;
+
 public class CalcModel extends AbstractModel{
 
 
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	public boolean operationAdditionner() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public boolean operationSoustraire() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean operationDiviser() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean operationMultiplier() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean reset() {
-		// TODO Auto-generated method stub
+		this.setRslt(0);
 		return false;
 	}
+
+
+	@Override
+	public boolean operationAdditionner(float nbr) {
+		this.setRslt(this.getRslt() + nbr);
+		return false;
+	}
+
+
+
+	@Override
+	public boolean operationSoustraire(float nbr) {
+		this.setRslt(this.getRslt() - nbr);
+		return false;
+	}
+
+
+
+	@Override
+	public boolean operationDiviser(float nbr) {
+		this.setRslt(this.getRslt() / nbr);
+		return false;
+	}
+
+
+
+	@Override
+	public boolean operationMultiplier(float nbr) {
+		this.setRslt(this.getRslt() * nbr);
+		return false;
+	}
+
+
+	@Override
+	public boolean egal() {
+		for(PropertyChangeListener str : this.getSupport().getPropertyChangeListeners("resultat")) {
+			System.out.println(str);
+		}
+		
+		
+		return false;
+	}
+	
+	
 
 }

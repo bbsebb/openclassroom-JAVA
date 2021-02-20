@@ -4,11 +4,13 @@ public abstract class AbstractController {
 	
 	String chiffre;
 	String op;
+	String opPre = null;
 	AbstractModel model;
+	boolean nouveauChiffre;
 	
-	public abstract String controleChiffre () ;
+	public abstract String controleChiffre (String chiffre) ;
 	
-	public abstract boolean controleOp();
+	public abstract boolean controleOp(String operateur);
 	
 	public abstract boolean controleCancel();
 	
@@ -37,6 +39,23 @@ public abstract class AbstractController {
 	protected void setModel(AbstractModel model) {
 		this.model = model;
 	}
+
+	protected String getOpPre() {
+		return opPre;
+	}
+
+	protected void setOpPre(String opPre) {
+		this.opPre = opPre;
+	}
+
+	protected boolean isNouveauChiffre() {
+		return nouveauChiffre;
+	}
+
+	protected void setNouveauChiffre(boolean nouveauChiffre) {
+		this.nouveauChiffre = nouveauChiffre;
+	}
+	
 	
 	
 	

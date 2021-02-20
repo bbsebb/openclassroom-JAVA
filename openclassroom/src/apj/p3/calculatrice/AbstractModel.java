@@ -2,38 +2,27 @@ package apj.p3.calculatrice;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.Serializable;
 
-public abstract class AbstractModel implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
+public abstract class AbstractModel {
 	float rslt;
 	PropertyChangeSupport support;
-
+	
 	AbstractModel() {
 		support = new PropertyChangeSupport(this);
-		this.setRslt(0);
 	}
-
-	public abstract boolean operationAdditionner(float nbr);
-
-	public abstract boolean operationSoustraire(float nbr);
-
-	public abstract boolean operationDiviser(float nbr);
-
-	public abstract boolean operationMultiplier(float nbr);
-
-	public abstract boolean reset();
 	
-	public abstract boolean egal();
+	public abstract boolean operationAdditionner (float nbr);
+	public abstract boolean operationSoustraire (float nbr);
+	public abstract boolean operationDiviser (float nbr);
+	public abstract boolean operationMultiplier (float nbr);
+	public abstract boolean reset ();
 
+	
 	protected float getRslt() {
 		return rslt;
 	}
-
 	protected void setRslt(float rslt) {
-		this.getSupport().firePropertyChange("resultat", this.rslt, rslt);
+		support.firePropertyChange("resultat", this.rslt , rslt);
 		this.rslt = rslt;
 	}
 
@@ -45,12 +34,16 @@ public abstract class AbstractModel implements Serializable {
 		this.support = support;
 	}
 
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		this.support.removePropertyChangeListener(listener);
-	}
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        this.support.addPropertyChangeListener(listener);
+    }
 
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        this.support.removePropertyChangeListener(listener);
+    }
 
-		this.support.addPropertyChangeListener(listener);
-	}
+	
+	
+	
+	
 }

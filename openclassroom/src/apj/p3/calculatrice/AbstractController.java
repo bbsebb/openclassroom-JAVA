@@ -3,30 +3,51 @@ package apj.p3.calculatrice;
 import java.util.regex.Pattern;
 
 public abstract class AbstractController {
-	
-	private static final String REGEX_NBR = "";
-	private static final Pattern PATTERN_NBR = Pattern.compile(REGEX_NBR);
+
+	String rgx;
+	Pattern pattern;
 	String chiffre;
 	String op;
 	String opPre = null;
 	AbstractModel model;
 	boolean nouveauChiffre;
-	
-	public abstract String controleChiffre (String chiffre) ;
-	
-	public abstract boolean controleOp(String operateur);
-	
-	public abstract boolean controleCancel();
-	
-	public abstract boolean controleEgal();
+	boolean negatif;
+
+	AbstractController() {
+		this.setRgx(".*");
+		this.pattern = Pattern.compile(rgx);
+		this.setChiffre(null);
+		this.setOp(null);
+		this.setOpPre(null);
+		this.setModel(null);
+		this.setNouveauChiffre(true);
+		this.setNegatif(false);
+	}
+
+	/**
+	 * Controle le chiffre est correcte
+	 * @param chiffre correspond au bouton appuyé
+	 * @return le nombre complèt à afficher
+	 */
+	public abstract String controleChiffre(String chiffre);
+
+	public abstract void controleOp(String operateur);
+
+	public abstract void controleCancel();
+
+	public abstract void controleEgal();
 
 	protected String getChiffre() {
 		return chiffre;
 	}
 
 	protected void setChiffre(String chiffre) {
-		if(PATTERN_NBR.matcher(chiffre).matches())
-		this.chiffre = chiffre;
+		if (chiffre != null) {
+			if (pattern.matcher(chiffre).matches())
+				this.chiffre = chiffre;
+			else
+				throw new IllegalArgumentException("Erreur : chiffre incorrect");
+		}
 	}
 
 	protected String getOp() {
@@ -58,11 +79,26 @@ public abstract class AbstractController {
 	}
 
 	protected void setNouveauChiffre(boolean nouveauChiffre) {
-		
+		if(nouveauChiffre)
+			this.setNegatif(false);
 		this.nouveauChiffre = nouveauChiffre;
 	}
-	
-	
+
+	public String getRgx() {
+		return rgx;
+	}
+
+	public void setRgx(String rgx) {
+		this.rgx = rgx;
+	}
+
+	public boolean isNegatif() {
+		return negatif;
+	}
+
+	public void setNegatif(boolean negatif) {
+		this.negatif = negatif;
+	}
 	
 	
 

@@ -15,20 +15,26 @@ public class Gui extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	String[] operateur = { "+", "-", "/", "*" };
+	/* On associe un model abstrait */
 	AbstractModel calcModel;
-	AbstractController controller ;
+	/* On associe un controller abstrait */
+	AbstractController controller;
 	JLabel label;
 
 	public Gui(AbstractModel caclModel) {
 
 		super("Calculatrice v2");
-
+		
 		this.calcModel = new CalcModel();
 		this.controller = new CalcController(this.calcModel);
+		
+		/* -- Construction de la JFRAME -- */
 		this.setSize(270, 270);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
+		
+		/* -- Construction des composants -- */
 		JPanel pan = (JPanel) this.getContentPane();
 		pan.setLayout(new BorderLayout());
 		pan.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -39,6 +45,10 @@ public class Gui extends JFrame {
 
 	}
 
+	/**
+	 * 
+	 * @return le JPanel où se trouve les boutons des opérations et clear 
+	 */
 	private JPanel createPanOp() {
 
 		JPanel panOp = new JPanel();
@@ -48,8 +58,13 @@ public class Gui extends JFrame {
 			panOp.add(createBtnOp(string));
 		}
 		return panOp;
+
 	}
 
+	/**
+	 * 
+	 * @return le JPanel où se trouve les chiffres, le point et le bouton égal
+	 */
 	private JPanel createPanChiffre() {
 
 		JPanel panChiffre = new JPanel();
@@ -64,12 +79,16 @@ public class Gui extends JFrame {
 		return panChiffre;
 	}
 
+	/**
+	 * 
+	 * @return le JLabel d'affichage des resultats
+	 */
 	private JLabel createLabel() {
 
 		JLabel label = new JLabel();
 		label.setBorder(BorderFactory.createLineBorder(Color.black));
 		label.setText("0");
-		calcModel.addPropertyChangeListener((e) -> label.setText( e.getNewValue().toString()));
+		calcModel.addPropertyChangeListener((e) -> label.setText(e.getNewValue().toString()));
 		return label;
 	}
 
@@ -101,19 +120,33 @@ public class Gui extends JFrame {
 		return btn;
 	}
 
-	private void actionChiffre(ActionEvent e) {
-		this.label.setText(controller.controleChiffre(((JButton) e.getSource()).getText()));
+	private void actionChiffre(ActionEvent e) {	
+		try {
+			this.label.setText(controller.controleChiffre(((JButton) e.getSource()).getText()));
+		} catch (IllegalArgumentException e1) {
+			this.actionClear(e);
+			this.label.setText(e1.getMessage());
+		}
 	}
 
 	private void actionEgal(ActionEvent e) {
-		controller.controleEgal();
+		try {
+			controller.controleEgal();
+		} catch (IllegalArgumentException e1) {
+			this.actionClear(e);
+			this.label.setText(e1.getMessage());
+		}
 	}
 
 	private void actionOperateur(ActionEvent e) {
 		String txtBtn = ((JButton) e.getSource()).getText();
-		
-		controller.controleOp(txtBtn);
-			
+
+		try {
+			controller.controleOp(txtBtn);
+		} catch (IllegalArgumentException e1) {
+			this.actionClear(e);
+			this.label.setText(e1.getMessage());
+		}
 
 	}
 

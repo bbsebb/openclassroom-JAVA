@@ -1,7 +1,11 @@
 package apj.p3.calculatrice;
 
+import java.util.regex.Pattern;
+
 public abstract class AbstractController {
 	
+	private static final String REGEX_NBR = "";
+	private static final Pattern PATTERN_NBR = Pattern.compile(REGEX_NBR);
 	String chiffre;
 	String op;
 	String opPre = null;
@@ -21,6 +25,7 @@ public abstract class AbstractController {
 	}
 
 	protected void setChiffre(String chiffre) {
+		if(PATTERN_NBR.matcher(chiffre).matches())
 		this.chiffre = chiffre;
 	}
 
@@ -53,6 +58,7 @@ public abstract class AbstractController {
 	}
 
 	protected void setNouveauChiffre(boolean nouveauChiffre) {
+		
 		this.nouveauChiffre = nouveauChiffre;
 	}
 	

@@ -110,7 +110,11 @@ public class Gui extends JFrame {
 	}
 
 	private void actionOperateur(ActionEvent e) {
-		controller.controleOp(((JButton) e.getSource()).getText());
+		String txtBtn = ((JButton) e.getSource()).getText();
+		
+		controller.controleOp(txtBtn);
+			
+
 	}
 
 	private void actionClear(ActionEvent e) {
